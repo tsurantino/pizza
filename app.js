@@ -4,18 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var mongoose = require('mongoose');
 
 var staticRoutes = require('./routes/index');
 var applicationRoutes = require('./routes/applications');
-var accountRoutes = require('./routes/accounts');
+var userRoutes = require('./routes/users');
 
 var app = express();
 
-// view engine setup
+// VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
+// DEPENDANCY CONFIGS
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -23,10 +27,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// COOKIE, SESSION AND FLASH SETTINGS
+app.use(cookieParser('secret'));
+app.use(session({
+    cookie: { maxAge: 3000000 },
+    saveUninitialized: true,
+    resave: 'true',
+    secret: 'secret'
+}));
+app.use(flash());
+
+// PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
+
+// PASSPORT STRATEGY
+var initPassport = require('./config/passport');
+initPassport(passport);
+
+// APPLICATION ROUTES
 app.use('/', staticRoutes);
 app.use('/applications', applicationRoutes);
-app.use('/accounts', accountRoutes);
+app.use('/users', userRoutes);
 
+// CATCH ALLS
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
