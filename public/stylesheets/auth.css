@@ -1,0 +1,25 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.push-up { margin-top: 1em; }
+.push-down { margin-bottom: 1em; }
+.push-right { margin-right: 1em; }
+.push-left { margin-right: 1em; }
+
+
+.modal-dialog {
+  z-index: 1060 !important; /* hackfix */
+}
+
+.max-img {
+  max-width: 100%;
+}
