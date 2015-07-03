@@ -4,10 +4,17 @@
     <title>Pizza - A Hackathon Platform</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/flatly.min.css' />
     <link rel="stylesheet" href="/stylesheets/auth.css">
   </head>
   <body>
     <div class="container">
+      {{#if message}}
+        <div class="alert alert-{{message.style}} alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>{{message.type}}!</strong> {{message.text}}
+        </div>
+      {{/if}}
       {{{body}}}
       <div class="text-center">
         <a href="/">Back To Home</a>

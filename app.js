@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// COOKIE, SESSION AND FLASH SETTINGS
+// COOKIE AND SESSION SETTINGS
 app.use(cookieParser('secret'));
 app.use(session({
     cookie: { maxAge: 3000000 },
@@ -35,7 +35,14 @@ app.use(session({
     resave: 'true',
     secret: 'secret'
 }));
+
+// FLASH SETTINGS
 app.use(flash());
+app.use(function(req, res, next){
+  res.locals.message = req.flash('message');
+  next();
+});
+
 
 // PASSPORT
 app.use(passport.initialize());

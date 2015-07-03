@@ -1,4 +1,5 @@
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt-nodejs'),
+    faker = require('faker');
 
 var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
@@ -18,7 +19,7 @@ module.exports = function(passport) {
   passport.use('login', new LocalStrategy({
       usernameField: 'email',
       passwordField: 'password',
-      passReqToCallback: true // pass req to call back lets us use any req param in strat
+      passReqToCallback: true
     }, 
     function(req, email, password, done) {
       User.findOne({'email': email.toLowerCase()},
@@ -28,16 +29,23 @@ module.exports = function(passport) {
           if (!user) {
             console.log('No user found');
             return done(null, false,
-              req.flash('errorMessage', 'User not found!'));
+              req.flash('message', {
+                style: 'danger', type: 'error', text: 'User not found!',
+              }));
           }
 
           if (!isValidPassword(user, password)) {
             console.log('Invalid password');
             return done(null, false,
-              req.flash('errorMessage', 'Invalid password'));
+              req.flash('message', {
+                style: 'danger', type: 'error', text: 'Invalid password!',
+              }));
           }
 
-          return done(null, user, req.flash('successMessage', 'Login successful!'));
+          return done(null, user, 
+            req.flash('message', {
+              style: 'success', type: 'success', text: 'Login successful!!',
+            }));
         })
     })
   );
@@ -57,11 +65,12 @@ module.exports = function(passport) {
           if (user) {
             console.log('User already exists.');
             return done(null, false,
-              req.flash('errorMessage', 'User already exists'));
+              req.flash('message', {
+                style: 'danger', type: 'error', text: 'User already exists!',
+              }));
           } else {
             console.log('Creating a new user');
-            // if there is no user with that email
-            // create the user
+
             var newUser = new User();
             newUser.username = req.body['username'];
             newUser.email = email;
@@ -75,7 +84,11 @@ module.exports = function(passport) {
               }
 
               console.log('User registration successful');
-              req.flash('successMessage', 'Registration successful. You may now login');
+              req.flash('message', {
+                style: 'success',
+                type: 'success', 
+                text: 'Registration successful, you may now login',
+              });
               return done(null, newUser);
             });
           }
