@@ -1,8 +1,16 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 6em 0em;
 }
 
-a {
-  color: #00B7FF;
+.content-buffer {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.application-details p {
+  margin-bottom: 0.1em;
+}
+
+.application-details textarea {
+  resize: none;
 }
