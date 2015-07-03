@@ -14,3 +14,29 @@ body {
 .application-details textarea {
   resize: none;
 }
+
+/* sm width */
+@media (min-width: 768px) { 
+  .form-filter .form-control {
+    width: 17%;
+  }
+
+  .form-filter button {
+    width: 13%;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-filter > * {
+    margin-bottom: 0.75em;
+  }
+
+  .form-filter button {
+    display: block;
+    width: 100%;
+  }
+}
+
+.table-center > tbody > tr > td {
+  vertical-align: middle;
+}
