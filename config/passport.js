@@ -59,7 +59,9 @@ module.exports = function(passport) {
     }, 
     function(req, email, password, done) {
       findOrCreateUser = function() {
-        User.findOne({'email': email.toLowerCase()}, function(err, user) {
+        User.findOne( { 
+          $or: [ {'email': email.toLowerCase()}, {'username': req.body['username']}, ], 
+        }, function(err, user) {
           if (err) {
             console.log('Error in sign-up: ' + err);
             return done(err);

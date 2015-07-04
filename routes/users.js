@@ -19,10 +19,41 @@ router.route('/create')
     failureFlash : true  ,
   }));
 
+router.route('/edit/:id')
+  .get(function(req, res, next) {
+    User.findById(req.params.id, function(err, user) {
+      if (err) console.log(err);
+      res.render('users/edit', {
+        user: user,
+        role: {
+          // TODO: HACK :(
+          judge: user.role == 'judge' ? true : false,
+          hacker: user.role == 'hacker' ? true : false,
+          admin: user.role == 'admin' ? true : false,
+        }
+      });
+    })
+  })
+  .post(function(req, res) {
+    User.update({_id: req.params.id}, req.body, function(err) {
+      if (err) console.log(err);
+
+      req.flash('messages', {
+        style: 'success',
+        type: 'Success', 
+        text: 'Account updated successfully',
+      });
+      res.redirect('/users/edit/'+ req.params.id);
+    })
+  });
+
+router.route('/delete/:id')
+  .post();
+
 router.route('/login')
   .get(function(req, res, next) {
-    res.render('users/login', { 
-      layout: '/users/auth_layout' 
+    res.render('users/auth/login', { 
+      layout: '/users/auth/auth_layout' 
     });
   })
   .post(passport.authenticate('login', {
@@ -33,8 +64,8 @@ router.route('/login')
 
 router.route('/resetpassword')
   .get(function(req, res, next) {
-    res.render('users/password_reset', {
-      layout: '/users/auth_layout' 
+    res.render('users/auth/password_reset', {
+      layout: '/users/auth/auth_layout' 
     });
   })
   .post(function(req, res) {
@@ -85,9 +116,9 @@ router.route('/changepassword/:hash')
     User.findOne({ changepassword: req.params.hash }, function(err, user) {
       if (err) console.log(err);
       if (user) {
-        res.render('users/password_change', {
+        res.render('users/auth/password_change', {
           user: user,
-          layout: '/users/auth_layout' 
+          layout: '/users/auth/auth_layout' 
         });
       } else {
         res.redirect('/users/login');
@@ -109,7 +140,6 @@ router.route('/changepassword/:hash')
               type: 'Success', 
               text: 'You have successfully changed your password',
             });
-
             res.redirect('/users/login');
           });
         } else {
