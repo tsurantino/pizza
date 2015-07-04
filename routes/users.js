@@ -36,14 +36,26 @@ router.route('/edit/:id')
   })
   .post(function(req, res) {
     User.update({_id: req.params.id}, req.body, function(err) {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
 
-      req.flash('messages', {
-        style: 'success',
-        type: 'Success', 
-        text: 'Account updated successfully',
-      });
-      res.redirect('/users/edit/'+ req.params.id);
+        if (err.code === 11000) {
+          // TODO: how to get specific field duplicate???
+          req.flash('messages', {
+            style: 'danger',
+            type: 'Error', 
+            text: 'The value you inputted conflicts with another user.',
+          });
+          res.redirect('/users/edit/'+ req.params.id);
+        }
+      } else {
+        req.flash('messages', {
+          style: 'success',
+          type: 'Success', 
+          text: 'Account updated successfully',
+        });
+        res.redirect('/users/edit/'+ req.params.id);
+      }
     })
   });
 

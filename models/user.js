@@ -5,8 +5,8 @@ var bcrypt = require('bcrypt'),
 
 var userSchema = Schema({
   username: { type: String, required: true, index: { unique: true, } },
-  password: { type: String, },
-  email: { type: String, },
+  email: { type: String, required: true, index: { unique: true, } },
+  password: { type: String},
   role: { type: String, },
 
   resetpassword: { type: String, },
