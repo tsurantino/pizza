@@ -1,7 +1,7 @@
 var bcrypt = require('bcrypt-nodejs'),
     faker = require('faker'),
-    emailer = require('../config/email'),
     User = require('../models/user'),
+    UserController = require('../controllers/users');
     LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
@@ -78,7 +78,6 @@ module.exports = function(passport) {
             if (password == 'hidden')
               password = faker.internet.password();
             
-            console.log(password);
             newUser.password = createHash(password);
             newUser.role = req.body['role'].toLowerCase();
             
@@ -88,37 +87,17 @@ module.exports = function(passport) {
                 throw err;
               }
 
-              console.log('User registration successful');
+              console.log('User creation successful');
 
-              emailer.sendMail({
-                  from: 'Pizza <no-reply@pizza.github.io>',
-                  to: email, 
-                  subject: 'Your account information for Pizza',
-                  text: 'Hey!' +
-                        '\n\n' +
-                        'An account has just been created for you on Pizza. ' +
-                        'You need to login to change your default password:'  +
-                        '\n\n' +
-                        'http://localhost:3000/users/login\n' +
-                        'Email: ' + email + '\n' +
-                        'Password: ' + password + '\n' +
-                        '\n' +
-                        'See you soon!',
-                }, 
-                function(err, info) {
-                  if(err) return console.log(err);
-                  console.log('Message sent: ' + info.response);
-                }
-              );
+              UserController.setToChangePassword(newUser, req, function(err, req, newUser) {
+                req.flash('messages', {
+                  style: 'success',
+                  type: 'Success', 
+                  text: 'Your account was created successfully',
+                });
 
-              req.flash('messages', {
-                style: 'success',
-                type: 'Success', 
-                text: 'Your account was created successfully',
+                return done(err, newUser);
               });
-
-              return done(null, newUser);
-              
             });
           }
         });
