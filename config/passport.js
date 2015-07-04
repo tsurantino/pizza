@@ -1,5 +1,4 @@
-var bcrypt = require('bcrypt-nodejs'),
-    faker = require('faker'),
+var faker = require('faker'),
     User = require('../models/user'),
     UserController = require('../controllers/users');
     LocalStrategy = require('passport-local').Strategy;
@@ -34,18 +33,21 @@ module.exports = function(passport) {
               }));
           }
 
-          if (!isValidPassword(user, password)) {
-            console.log('Invalid password');
-            return done(null, false,
+          user.comparePassword(password, function(err, isMatch) {
+            if (err) console.log(err);
+            if (!isMatch) {
+              console.log('Invalid password');
               req.flash('messages', {
                 style: 'danger', type: 'Error', text: 'Invalid password!',
-              }));
-          }
-
-          return done(null, user, 
-            req.flash('messages', {
-              style: 'success', type: 'Success', text: 'Login successful!!',
-            }));
+              });
+              return done(null, false);
+            } else {
+              req.flash('messages', {
+                style: 'success', type: 'Success', text: 'Login successful!!',
+              })
+              return done(null, user);
+            }
+          })
         })
     })
   );
@@ -78,7 +80,7 @@ module.exports = function(passport) {
             if (password == 'hidden')
               password = faker.internet.password();
             
-            newUser.password = createHash(password);
+            newUser.password = password;
             newUser.role = req.body['role'].toLowerCase();
             
             newUser.save(function(err) {
@@ -89,7 +91,7 @@ module.exports = function(passport) {
 
               console.log('User creation successful');
 
-              UserController.setToChangePassword(newUser, req, function(err, req, newUser) {
+              UserController.setToChangePassword(req, newUser, function(err, req, newUser) {
                 req.flash('messages', {
                   style: 'success',
                   type: 'Success', 
@@ -108,11 +110,5 @@ module.exports = function(passport) {
   );
   
   // BCRYPT HELPERS
-  var isValidPassword = function(user, password) {
-    return bcrypt.compareSync(password, user.password);
-  }
 
-  var createHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-  }
 }
