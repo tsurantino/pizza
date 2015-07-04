@@ -1,8 +1,8 @@
 var bcrypt = require('bcrypt-nodejs'),
-    faker = require('faker');
-
-var User = require('../models/user');
-var LocalStrategy = require('passport-local').Strategy;
+    faker = require('faker'),
+    emailer = require('../config/email'),
+    User = require('../models/user'),
+    LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
   // get/release user from session store
@@ -89,10 +89,32 @@ module.exports = function(passport) {
               }
 
               console.log('User registration successful');
+
+              emailer.sendMail({
+                  from: 'Pizza <no-reply@pizza.github.io>',
+                  to: email, 
+                  subject: 'Your account information for Pizza',
+                  text: 'Hey!' +
+                        '\n\n' +
+                        'An account has just been created for you on Pizza. ' +
+                        'You need to login to change your default password:'  +
+                        '\n\n' +
+                        'http://localhost:3000/users/login\n' +
+                        'Email: ' + email + '\n' +
+                        'Password: ' + password + '\n' +
+                        '\n' +
+                        'See you soon!',
+                }, 
+                function(err, info) {
+                  if(err) return console.log(err);
+                  console.log('Message sent: ' + info.response);
+                }
+              );
+
               req.flash('messages', {
                 style: 'success',
                 type: 'Success', 
-                text: 'Your account was created successfully ' + password,
+                text: 'Your account was created successfully',
               });
 
               return done(null, newUser);
