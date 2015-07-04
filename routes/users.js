@@ -1,9 +1,14 @@
 var express = require('express'),
     router = express.Router(),
-    passport = require('passport');
+    passport = require('passport'),
+    User = require('../models/user');
 
 router.get('/', function(req, res, next) {
-  res.render('users/list');
+  User.find({}, function(err, users) {
+    res.render('users/list', {
+      users: users,
+    });
+  })
 });
 
 router.route('/login')

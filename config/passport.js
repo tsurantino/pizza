@@ -22,7 +22,6 @@ module.exports = function(passport) {
       passReqToCallback: true
     }, 
     function(req, email, password, done) {
-      console.log('In login auth');
       User.findOne({'email': email.toLowerCase()},
         function(err, user) {
           if (err) return done(err);
@@ -75,6 +74,11 @@ module.exports = function(passport) {
             var newUser = new User();
             newUser.username = req.body['username'];
             newUser.email = email;
+            
+            if (password == 'hidden')
+              password = faker.internet.password();
+            
+            console.log(password);
             newUser.password = createHash(password);
             newUser.role = req.body['role'].toLowerCase();
             
@@ -88,9 +92,11 @@ module.exports = function(passport) {
               req.flash('messages', {
                 style: 'success',
                 type: 'Success', 
-                text: 'Registration successful, you may now login',
+                text: 'Your account was created successfully ' + password,
               });
+
               return done(null, newUser);
+              
             });
           }
         });

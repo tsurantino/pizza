@@ -2,9 +2,12 @@
   <hr>
   <div class="well">
     <form class="form-inline form-filter" action="/users/create" method="POST">
-      <input type="text" class="form-control" id="accountUsername" placeholder="Username">
-      <input type="email" class="form-control" id="accountEmail" placeholder="Email">
-      <select class="form-control" id="accountType">
+      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+      <!-- we keep this field hidden so that passport auth can fire, as it requires it, 
+      even though we auto generate the password if created within this UI -->
+      <input type="hidden" class="form-control" id="password" name="password" value="hidden">
+      <select class="form-control" id="role" name="role">
         <option>Judge</option>
         <option>Hacker</option>
         <option>Admin</option>
@@ -13,21 +16,27 @@
     </form>
   </div>
   <hr>
+  {{#if users}}
   <table class="table table-center">
     <thead>
       <tr>
-        <th style="width:30%">Username</th>
-        <th style="width:30%">Email</th>
+        <th style="width:20%">Username</th>
+        <th style="width:20%">Email</th>
+        <th style="width:20%">Role</th>
         <th style="width:10%"></th>
         <th style="width:10%"></th>
       </tr>
     </thead>
     <tbody>
+      {{#each users}}
       <tr>
-        <td>atsurkan</td>
-        <td><a href="artur@hackwestern.ca">artur@hackwestern.ca</a></td>
-        <td><a class="btn btn-primary btn-block" href="/applications/1">View</a></td>
-        <td><a class="btn btn-danger btn-block" href="/applications/1">Delete</a></td>
+        <td>{{this.username}}</td>
+        <td><a href="{{this.email}}">{{this.email}}</a></td>
+        <td>{{this.role}}</td>
+        <td><a class="btn btn-primary btn-block" href="/applications/{{this._id}}">Edit</a></td>
+        <td><a class="btn btn-danger btn-block" href="/applications/{{this._id}}">Delete</a></td>
       </tr>
+      {{/each}}
     </tbody>
   </table>
+  {{/if}}
