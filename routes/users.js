@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.route('/login')
   .get(function(req, res, next) {
+    console.log(res.locals);
     res.render('users/login', { 
       layout: '/users/auth_layout' 
     });
@@ -19,9 +20,9 @@ router.route('/login')
   }));
 
 router.route('/create')
-  .post(passport.authenticate('register', {
-    successRedirect: '/users/login',
-    failureRedirect: '/users/register',
+  .post(passport.authenticate('create', {
+    successRedirect: '/users',
+    failureRedirect: '/users',
     failureFlash : true  ,
   }));
 

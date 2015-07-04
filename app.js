@@ -13,6 +13,8 @@ var staticRoutes = require('./routes/index');
 var applicationRoutes = require('./routes/applications');
 var userRoutes = require('./routes/users');
 
+mongoose.connect('mongodb://localhost/pizza');
+
 var app = express();
 
 // VIEW ENGINE
@@ -39,10 +41,9 @@ app.use(session({
 // FLASH SETTINGS
 app.use(flash());
 app.use(function(req, res, next){
-  res.locals.message = req.flash('message');
+  res.locals.messages = req.flash('messages');
   next();
 });
-
 
 // PASSPORT
 app.use(passport.initialize());

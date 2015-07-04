@@ -30,11 +30,13 @@
       </div>
     </nav>
     <div class="container">
-      {{#if message}}
-        <div class="alert alert-{{message.style}} alert-dismissable">
+      {{#if messages}}
+        {{#each messages}}
+        <div class="alert alert-{{this.style}} alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <strong>{{message.type}}!</strong> {{message.text}}
+          <strong>{{this.type}}!</strong> {{this.text}}
         </div>
+        {{/each}}
       {{/if}}
       {{{body}}}
     </div>

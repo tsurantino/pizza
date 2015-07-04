@@ -22,6 +22,7 @@ module.exports = function(passport) {
       passReqToCallback: true
     }, 
     function(req, email, password, done) {
+      console.log('In login auth');
       User.findOne({'email': email.toLowerCase()},
         function(err, user) {
           if (err) return done(err);
@@ -29,22 +30,22 @@ module.exports = function(passport) {
           if (!user) {
             console.log('No user found');
             return done(null, false,
-              req.flash('message', {
-                style: 'danger', type: 'error', text: 'User not found!',
+              req.flash('messages', {
+                style: 'danger', type: 'Error', text: 'User not found!',
               }));
           }
 
           if (!isValidPassword(user, password)) {
             console.log('Invalid password');
             return done(null, false,
-              req.flash('message', {
-                style: 'danger', type: 'error', text: 'Invalid password!',
+              req.flash('messages', {
+                style: 'danger', type: 'Error', text: 'Invalid password!',
               }));
           }
 
           return done(null, user, 
-            req.flash('message', {
-              style: 'success', type: 'success', text: 'Login successful!!',
+            req.flash('messages', {
+              style: 'success', type: 'Success', text: 'Login successful!!',
             }));
         })
     })
@@ -65,8 +66,8 @@ module.exports = function(passport) {
           if (user) {
             console.log('User already exists.');
             return done(null, false,
-              req.flash('message', {
-                style: 'danger', type: 'error', text: 'User already exists!',
+              req.flash('messages', {
+                style: 'danger', type: 'Error', text: 'User already exists!',
               }));
           } else {
             console.log('Creating a new user');
@@ -84,9 +85,9 @@ module.exports = function(passport) {
               }
 
               console.log('User registration successful');
-              req.flash('message', {
+              req.flash('messages', {
                 style: 'success',
-                type: 'success', 
+                type: 'Success', 
                 text: 'Registration successful, you may now login',
               });
               return done(null, newUser);
