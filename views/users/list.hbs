@@ -1,42 +1,69 @@
-  <h1>Accounts</h1>
-  <hr>
-  <div class="well">
-    <form class="form-inline form-filter" action="/users/create" method="POST">
-      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-      <!-- we keep this field hidden so that passport auth can fire, as it requires it, 
-      even though we auto generate the password if created within this UI -->
-      <input type="hidden" class="form-control" id="password" name="password" value="hidden">
-      <select class="form-control" id="role" name="role">
-        <option>Judge</option>
-        <option>Hacker</option>
-        <option>Admin</option>
-      </select>
-      <button type="submit" class="btn btn-default">Create Account</button>
-    </form>
+<h1>Accounts</h1>
+<hr>
+<div class="well">
+  <form class="form-inline form-filter" action="/users/create" method="POST">
+    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+    <!-- we keep this field hidden so that passport auth can fire, as it requires it, 
+    even though we auto generate the password if created within this UI -->
+    <input type="hidden" class="form-control" id="password" name="password" value="hidden">
+    <select class="form-control" id="role" name="role">
+      <option>Judge</option>
+      <option>Hacker</option>
+      <option>Admin</option>
+    </select>
+    <button type="submit" class="btn btn-default">Create Account</button>
+  </form>
+</div>
+<hr>
+{{#if users}}
+<table class="table table-center">
+  <thead>
+    <tr>
+      <th style="width:20%">Username</th>
+      <th style="width:20%">Email</th>
+      <th style="width:20%">Role</th>
+      <th style="width:10%"></th>
+      <th style="width:10%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <td>{{this.username}}</td>
+      <td><a href="{{this.email}}">{{this.email}}</a></td>
+      <td>{{this.role}}</td>
+      <td><a class="btn btn-primary btn-block" href="/users/edit/{{this._id}}">Edit</a></td>
+      <td><a class="btn btn-danger btn-block btn-delete" href="#" data-toggle="modal" data-target="#delete-modal" data-href="/users/delete/{{this._id}}">Delete</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/if}}
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="Delete">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete User</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this user? You cannot reverse this action.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <form class="delete-confirm" style="display:inline-block;" action="" method="POST">
+          <button type="submit" class="btn btn-danger">Confirm Delete</a>
+        </form>
+      </div>
+    </div>
   </div>
-  <hr>
-  {{#if users}}
-  <table class="table table-center">
-    <thead>
-      <tr>
-        <th style="width:20%">Username</th>
-        <th style="width:20%">Email</th>
-        <th style="width:20%">Role</th>
-        <th style="width:10%"></th>
-        <th style="width:10%"></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each users}}
-      <tr>
-        <td>{{this.username}}</td>
-        <td><a href="{{this.email}}">{{this.email}}</a></td>
-        <td>{{this.role}}</td>
-        <td><a class="btn btn-primary btn-block" href="/users/edit/{{this._id}}">Edit</a></td>
-        <td><a class="btn btn-danger btn-block" href="/users/delete/{{this._id}}">Delete</a></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  {{/if}}
+</div>
+{{#extend "scripts"}}
+<script>
+  $('.btn-delete').click(function() {
+    $('.delete-confirm').attr('action', $('.btn-delete').attr('data-href'));
+  })
+</script>
+{{/extend}}

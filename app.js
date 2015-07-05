@@ -53,6 +53,10 @@ app.use(passport.session());
 var initPassport = require('./config/passport');
 initPassport(passport);
 
+// HBS
+var hbsHelpers = require('./config/hbs');
+hbsHelpers();
+
 // APPLICATION ROUTES
 app.use('/', staticRoutes);
 app.use('/applications', applicationRoutes);

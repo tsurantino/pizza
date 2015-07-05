@@ -35,6 +35,9 @@ router.route('/edit/:id')
     })
   })
   .post(function(req, res) {
+    if (req.body.role) {
+      req.body.role = req.body.role.toLowerCase();
+    }
     User.update({_id: req.params.id}, req.body, function(err) {
       if (err) {
         console.log(err);
@@ -60,7 +63,26 @@ router.route('/edit/:id')
   });
 
 router.route('/delete/:id')
-  .post();
+  .post(function(req, res) {
+    User.findByIdAndRemove(req.params.id, function(err) {
+      if (err) {
+        console.log(err);
+        req.flash('messages', {
+          style: 'danger',
+          type: 'Error', 
+          text: 'Something went wrong deleting that account',
+        });
+        res.redirect('/users/');
+      } else {
+        req.flash('messages', {
+          style: 'success',
+          type: 'Success', 
+          text: 'Account deleted successfully',
+        });
+        res.redirect('/users/');
+      }
+    })
+  });
 
 router.route('/login')
   .get(function(req, res, next) {
