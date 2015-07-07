@@ -11,6 +11,8 @@ var userSchema = Schema({
 
   resetpassword: { type: String, },
   changepassword: { type: String, },
+
+  application: { type: Schema.Types.ObjectId, ref: 'Application' },
 });
 
 userSchema.pre('save', function(next) {

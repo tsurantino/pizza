@@ -5,7 +5,7 @@
     <form id="application" data-toggle="validator" action="" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label>Full Name</label>
-        <input type="Text" limit="128" name="firstName" class="form-control" placeholder="" required>
+        <input type="Text" limit="128" name="fullName" class="form-control" placeholder="" required>
         <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
@@ -15,18 +15,18 @@
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" limit="64" name="password" class="form-control" id="password-first" placeholder="" data-minlength="8" data-error="Minimum 8 characters" required>
+        <input type="password" limit="64" name="password" class="form-control" id="password" placeholder="" data-minlength="8" data-error="Minimum 8 characters" required>
         <p class="help-block">We'll use this to let you edit your application and check its status.</p>
         <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
         <label>Name of University, College or High-School</label>
-        <input type="text" limit="128" name="university" class="form-control" placeholder="" required>
+        <input type="text" limit="128" name="school" class="form-control" placeholder="" required>
         <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
         <label>Level of Study</label>
-        <select name="year" class="form-control" class="selectpicker" required>
+        <select name="levelOfStudy" class="form-control selectpicker" required>
           <option>Undergraduate</option>
           <option>Graduate</option>
           <option>High School</option>
@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <label>Graduation Year</label>
-        <select name="year" class="form-control" class="selectpicker" required>
+        <select name="gradYear" class="form-control" class="selectpicker" required>
           <option>2016</option>
           <option>2017</option>
           <option>2018</option>
@@ -47,14 +47,14 @@
       </div>
       <div class="form-group" required>
         <label>Major</label>
-        <input type="Text" limit="128" name="major" class="form-control" placeholder="">
+        <input type="Text" limit="128" name="major" class="form-control" placeholder="" required>
         <p class="help-block">If you are applying from high-school, write N/A here</p>
         <div class="help-block with-errors"></div>
       </div>
       <hr/>
       <div class="form-group">
         <label for="teamCaptain">Team Captain's Email (optional)</label>
-        <input type="email" limit="128" name="teamEmail" class="form-control check-optional" id="teamCaptain" placeholder="">
+        <input type="email" limit="128" name="teamEmail" class="form-control check-optional" id="teamCaptain" placeholder="" required>
         <p class="help-block"> If you would like to apply as part of a team, please put in the email of your team captain. Make sure that everyone on the team uses the same team captain email on your team, including your team captain.</p>
       </div>
       <hr>
@@ -65,7 +65,7 @@
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" class='check-optional' id='hardwareHack' name='hardwareHack'> I will need travel reimbursement.
+          <input type="checkbox" class='check-optional' id='travelReimbursement' name='travelReimbursement'> I will need travel reimbursement.
         </label>
       </div>
       <div class="checkbox">
@@ -91,7 +91,7 @@
       </div>
       <div class="form-group">
         <label>Other dietary restrictions (optional)</label>
-        <input type="Text" limit="128" name="dietaryRestrictions" class="form-control check-optional" placeholder="">
+        <input type="Text" limit="128" name="otherDietaryRestrictions" class="form-control check-optional" placeholder="">
       </div>
       <hr/>
       <div class="form-group">
@@ -111,29 +111,30 @@
       <hr/>
       <p>The below fields are optional, but we recommend you fill out at least one so that 
       we can get a better understanding of your background</p>
-      <div class="form-group" id="uploaded-resume" style="display:none;">
-        <p><strong>Uploaded resume name</strong></p>
-      </div>
       <div class="form-group">
-        <label for="exampleInputFile">Resume (optional)</label>
-        <input type="file" name="exampleInputFile">
+        <label for="exampleInputFile">Resume in PDF format (optional)</label>
+        <input type="file" name="resumeFile" accept="application/pdf">
       </div>
       <div class="form-group">
         <label>Personal Website (optional)</label>
-        <input type="Text" limit="128" name="personalSite" class="form-control check-url check-optional" placeholder="">
+        <input type="Text" limit="128" name="personalSite" class="form-control" placeholder="htp://...">
       </div>
       <div class="form-group">
         <label>Github (optional)</label>
-        <input type="Text" limit="128" name="Github" class="form-control check-url check-optional" placeholder="http://github.com/...">
+        <input type="Text" limit="128" name="github" class="form-control" placeholder="http://github.com/...">
       </div>
       <div class="form-group">
         <label>LinkedIn (optional)</label>
-        <input type="Text" limit="128" name="LinkedIn" class="form-control check-url check-optional" placeholder="http://linkedin.com/in/...">
+        <input type="Text" limit="128" name="linkedin" class="form-control" placeholder="http://linkedin.com/in/...">
       </div>
       <div class="form-group">
-        <label for="additionalText"  class="control-label">Additional Details (optional)</label>
+        <label>ChallengePost (optional)</label>
+        <input type="Text" limit="128" name="challengepost" class="form-control" placeholder="http://challengepost.com/...">
+      </div>
+      <div class="form-group">
+        <label for="additionalProfInfo"  class="control-label">Additional Details (optional)</label>
         <div>
-          <textarea name="additionalText" rows="10" cols="70" limit="200" class="form-control check-optional" placeholder=""></textarea>
+          <textarea name="additionalProfInfo" rows="10" cols="70" limit="200" class="form-control check-optional" placeholder=""></textarea>
         </div>
         <p class="help-block">You can optionally take this space to add any details or information about your experience or background</p>
       </div>
@@ -141,7 +142,7 @@
       <div class="form-group">
         <label for="why"  class="control-label">Why do you want to attend Hack Western?</label>
         <div>
-          <textarea class="form-control" id="why" name='reason' rows="10" cols="70" limit="700" placeholder="" maxlength="700" required></textarea>
+          <textarea class="form-control" id="why" name='whyAttend' rows="10" cols="70" limit="700" placeholder="" maxlength="700" required></textarea>
           <div class="help-block with-errors"></div>
         </div>
         <p class="help-block">Please keep this answer under 100 words. There is a hard limit of 700 characters.</p>
@@ -149,7 +150,7 @@
       <div class="form-group">
         <label for="pride"  class="control-label">What is something you have built or put together that you are the most proud of? It doesn’t need to be a hack/coding-related. It can also be an event, initiative, or anything creative you can think of.</label>
         <div>
-          <textarea class="form-control" id="pride" rows="10" name='pride' cols="70" limit="1300" placeholder="" maxlength="1300" required></textarea>
+          <textarea class="form-control" id="pride" rows="10" name='mostProudWork' cols="70" limit="1300" placeholder="" maxlength="1300" required></textarea>
           <div class="help-block with-errors"></div>
         </div>
         <p class="help-block">Please keep this answer under 150 words. There is a hard limit of 1300 characters.</p>
