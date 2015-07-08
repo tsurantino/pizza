@@ -17,8 +17,6 @@
         <th>Date Submitted</th>
         <th>Full Name</th>
         <th>School</th>
-        <th>Level Of Study</th>
-        <th>Major</th>
         <th></th>
         <th></th>
         <th></th>
@@ -26,16 +24,16 @@
       </tr>
     </thead>
     <tbody>
+      {{#each apps}}
       <tr>
-        <td>6/30/2015</td>
-        <td>Artur Tsurkan</td>
-        <td>Western University</td>
-        <td>Undergraduate</td>
-        <td>Business</td>
-        <td><a href="#">Website</a></td>
-        <td><a href="#">GitHub</a></td>
-        <td><a href="#">Resume</a></td>
-        <td><a class="btn btn-primary" href="/applications/1">View</a></td>
+        <td>TODO</td>
+        <td>{{this.fullName}}</td>
+        <td>{{this.school}}</td>
+        <td><a href="{{this.personalSite}}">Website</a></td>
+        <td><a href="{{this.github}}">GitHub</a></td>
+        <td><a href="/resumes/{{this.resumeFileName}}">Resume</a></td>
+        <td><a class="btn btn-primary btn-block" href="/applications/1">View</a></td>
       </tr>
+      {{/each}}
     </tbody>
   </table>

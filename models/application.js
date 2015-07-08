@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var applicationSchema = Schema({
+  dateSubmitted: { type: Date, default: Date.now },
   fullName: { type: String, },
   school: { type: String, },
   levelOfStudy: { type: String, },
