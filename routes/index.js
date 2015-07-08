@@ -39,13 +39,13 @@ router.route('/apply')
           app: req.body,
         });
       } else {
+        // TODO: this seems messy
         newApp = new Application(req.body);
         newApp.resumeFileName = req.files['resumeFile'].name;
         newApp.save(function (err) {
           if (err) {
             errorSave(err, req, res);
           } else {
-            // now we have to create the user...
             newUser = new User({
               email: req.body.email,
               password: req.body.password,

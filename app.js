@@ -17,6 +17,10 @@ mongoose.connect('mongodb://localhost/pizza');
 
 var app = express();
 
+// HBS
+var hbsHelpers = require('./config/hbs');
+hbsHelpers();
+
 // VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -52,10 +56,6 @@ app.use(passport.session());
 // PASSPORT STRATEGY
 var initPassport = require('./config/passport');
 initPassport(passport);
-
-// HBS
-var hbsHelpers = require('./config/hbs');
-hbsHelpers();
 
 // APPLICATION ROUTES
 app.use('/', staticRoutes);

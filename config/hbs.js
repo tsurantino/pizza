@@ -1,4 +1,5 @@
-var hbs = require('hbs');
+var hbs = require('hbs'),
+    path = require('path');
 
 module.exports = function() {
   var blocks = {};
@@ -29,4 +30,6 @@ module.exports = function() {
       })
       .join('\n');
   });
+
+  hbs.registerPartials(path.join(__dirname, '../', '/views/partials'));
 };
