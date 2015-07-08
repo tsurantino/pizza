@@ -20,7 +20,7 @@ var applicationSchema = Schema({
 
   shirt: { type: String, },
 
-  resumeFilePath: { type: String, },
+  resumeFileName: { type: String, },
   personalSite: { type: String, },
   challengepost: { type: String, },
   github: { type: String, },
