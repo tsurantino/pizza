@@ -25,7 +25,15 @@
             <li><a href="/apply">Apply</a></li>
             <li><a href="/applications">Applications</a></li>
             <li><a href="/users">Accounts</a></li>
+            {{#if user}}
+            {{#if user.application}}
+            <li><a href="/applications/edit/{{user.application}}">Edit Application</a></li>
+            {{/if}}
+            <li><a href="/users/logout">Logout</a></li>
+            <li><p class="navbar-text">Signed in as {{user.username}}</p></li>
+            {{else}}
             <li><a href="/users/login">Login</a></li>
+            {{/if}}
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -52,6 +52,11 @@ app.use(function(req, res, next){
 // PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next){
+  if (req.user)
+    res.locals.user = req.user;
+  next();
+});
 
 // PASSPORT STRATEGY
 var initPassport = require('./config/passport');

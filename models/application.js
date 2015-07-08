@@ -7,6 +7,7 @@ var applicationSchema = Schema({
   school: { type: String, },
   levelOfStudy: { type: String, },
   gradYear: { type: String, },
+  major: { type: String, },
 
   teamEmail: { type: String, },
 

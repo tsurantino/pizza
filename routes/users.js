@@ -16,7 +16,7 @@ router.route('/create')
   .post(passport.authenticate('create', {
     successRedirect: '/users',
     failureRedirect: '/users',
-    failureFlash : true  ,
+    failureFlash : true,
   }));
 
 router.route('/edit/:id')
@@ -95,6 +95,17 @@ router.route('/login')
     failureRedirect: '/users/login',
     failureFlash: true
   }));
+
+router.get('/logout', function (req, res){
+  req.logout();
+  req.flash('messages', {
+    style: 'success',
+    type: 'Success', 
+    text: 'You\'ve successfully logged out.',
+  });
+  res.redirect('/');
+});
+
 
 router.route('/resetpassword')
   .get(function(req, res, next) {

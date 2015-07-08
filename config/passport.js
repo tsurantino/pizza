@@ -43,7 +43,7 @@ module.exports = function(passport) {
               return done(null, false);
             } else {
               req.flash('messages', {
-                style: 'success', type: 'Success', text: 'Login successful!!',
+                style: 'success', type: 'Success', text: 'Login successful!',
               })
               return done(null, user);
             }
