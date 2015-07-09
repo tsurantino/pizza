@@ -74,24 +74,9 @@
         </label>
       </div>
       <hr/>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name='vegetarian' {{#if app.vegetarian }}checked="checked"{{/if}}> Vegetarian
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name='vegan' {{#if app.vegan }}checked="checked"{{/if}}> Vegan
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name='gluten' {{#if app.gluten }}checked="checked"{{/if}}> Gluten-Free
-        </label>
-      </div>
       <div class="form-group">
-        <label>Other dietary restrictions (optional)</label>
-        <input type="Text" limit="128" name="otherDietaryRestrictions" value="{{app.otherDietaryRestrictions}}" class="form-control check-optional" placeholder="">
+        <label>Dietary restrictions (optional)</label>
+        <input type="Text" limit="128" name="dietaryRestrictions" value="{{app.dietaryRestrictions}}" class="form-control check-optional" placeholder="Vegetarian, vegan, gluten, halal, etc.">
       </div>
       <hr/>
       <div class="form-group">

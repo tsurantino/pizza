@@ -6,45 +6,59 @@
       <!-- Basic Details -->
       <div class="content-buffer row">
         <div class="col-lg-6">
-          <p><strong>Full Name:</strong> Artur Tsurkan</p>
-          <p><strong>Email:</strong> arturtsurkan@gmail.com</p>
-          <p><strong>School:</strong> Western University</p>
-          <p><strong>Level Of Study:</strong> Undergraduate</p>
-          <p><strong>Graduation Year:</strong> 2016</p>
-          <p><strong>Major:</strong> Business</p>
+          <p><strong>Date Submitted</strong> {{app.formattedDateSubmitted}}</p>
+          <p><strong>Full Name:</strong> {{app.fullName}}</p>
+          <p><strong>Email:</strong> {{app.owner.email}}</p>
+          <p><strong>School:</strong> {{app.school}}</p>
+          <p><strong>Level Of Study:</strong> {{app.levelOfStudy}}</p>
+          <p><strong>Graduation Year:</strong> {{app.gradYear}}</p>
+          <p><strong>Major:</strong> {{app.major}}</p>
         </div>
         <div class="content-buffer col-lg-6">
-          <p><strong>First Hackathon?</strong> Yes</p>
-          <p><strong>Travel Reimbursement?</strong> Yes</p>
-          <p><strong>Hardware Hack?</strong> Yes</p>
-          <p><strong>Dietary Restrictions?</strong> No</p>
-          <p><strong>T-Shirt Size:</strong> Men's - L</p>
+          <p><strong>First Hackathon?</strong> 
+            {{#if app.firstHackathon}}Yes{{else}}No{{/if}}
+          </p>
+          <p><strong>Travel Reimbursement?</strong> 
+            {{#if app.travelReimbursement}}Yes{{else}}No{{/if}}
+          </p>
+          <p><strong>Hardware Hack?</strong> 
+            {{#if app.hardwareHack}}Yes{{else}}No{{/if}}
+          </p>
+          <p><strong>Dietary Restrictions?</strong>
+            {{#if app.dietaryRestrictions}}{{app.dietaryRestrictions}}{{else}}No{{/if}}
+          </p>
+          <p><strong>T-Shirt Size:</strong> {{app.shirt}}</p>
         </div>
       </div>
       <!-- Essay Questions -->
       <div class="content-buffer row">
         <div class="col-lg-12">
           <p><strong>Why do you want to attend Hack Western?</strong></p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pellentesque ipsum, eu tincidunt nunc. Sed eget condimentum nisl. Praesent ultricies in neque ac suscipit. Sed tincidunt imperdiet ornare. Morbi purus purus, iaculis vitae dolor a, volutpat iaculis orci. Ut et erat faucibus, fermentum ipsum ac, auctor tellus. Morbi non lacinia augue, nec commodo lectus. Praesent nec ex pretium justo lacinia varius.</p>
+          <p>{{app.whyAttend}}</p>
         </div>
       </div>
       <div class="content-buffer row">
         <div class="col-lg-12">
           <p><strong>What is something you have built or put together that you are the most proud of? It doesn’t need to be a hack/coding-related. It can also be an event, initiative, or anything creative you can think of.</strong></p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pellentesque ipsum, eu tincidunt nunc. Sed eget condimentum nisl. Praesent ultricies in neque ac suscipit. Sed tincidunt imperdiet ornare. Morbi purus purus, iaculis vitae dolor a, volutpat iaculis orci. Ut et erat faucibus, fermentum ipsum ac, auctor tellus. Morbi non lacinia augue, nec commodo lectus. Praesent nec ex pretium justo lacinia varius.</p>
+          <p>{{app.mostProudWork}}</p>
         </div>
       </div>
       <!-- Professional Information -->
       <div class="row">
         <div class="col-lg-6">
+          {{#if app.personalSite}}
           <p class="content-buffer"><strong>Website</strong></p>
-          <p><a href="http://tsurantino.com/">http://tsurantino.com/</a></p>
+          <p><a href="{{app.personalSite}}">{{app.personalSite}}</a></p>
+          {{/if}}
+          {{#if app.challengepost}}
           <p class="content-buffer"><strong>ChallengePost</strong></p>
-          <p><a href="http://challengepost.com/tsurantino/">http://challengepost.com/tsurantino</a></p>
+          <p><a href="{{app.challengepost}}">{{app.challengepost}}</a></p>
+          {{/if}}
         </div>
         <div class="col-lg-6">
+          {{#if app.github}}
           <p><strong>GitHub</strong></p>
-          <p><a href="http://challengepost.com/tsurantino/">http://challengepost.com/tsurantino</a></p>
+          <p><a href="{{app.github}}">{{app.github}}</a></p>
           <p class="content-buffer"><strong>Stats</strong></p>
           <div class="row">
             <div class="col-lg-6">
@@ -56,12 +70,15 @@
               <p>Following: 21</p>
             </div>
           </div>
+          {{/if}}
         </div>
       </div>
       <div class="row content-buffer">
         <div class="col-lg-12">
+          {{#if app.resumeFileName}}
           <p><strong>Resume</strong></p>
-          <p><a href="/files/ATsurkan_Resume.pdf">ATsurkan_Resume.pdf</a></p>
+          <p><a href="/resumes/{{app.resumeFileName}}">{{app.resumeFileName}}</a></p>
+          {{/if}}
         </div>
       </div>
     </div>

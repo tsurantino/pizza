@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    moment = require('moment');
 
 var applicationSchema = Schema({
   dateSubmitted: { type: Date, default: Date.now },
@@ -15,11 +16,7 @@ var applicationSchema = Schema({
   hardwareHack: { type: Boolean, },
   travelReimbursement: { type: Boolean, },
 
-  vegetarian: { type: Boolean, },
-  vegan: { type: Boolean, },
-  gluten: { type: Boolean, },
-  otherDietaryRestrictions: { type: String, },
-
+  dietaryRestrictions: { type: String, },
   shirt: { type: String, },
 
   resumeFileName: { type: String, },
@@ -34,5 +31,9 @@ var applicationSchema = Schema({
 
   owner: { type: Schema.Types.ObjectId, ref: 'User' },
 });
+
+applicationSchema.virtual('formattedDateSubmitted').get(function() {
+  return moment(this.dateSubmitted).format('MM/DD/YYYY');
+})
 
 module.exports = mongoose.model('Application', applicationSchema);
