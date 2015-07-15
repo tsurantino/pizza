@@ -1,3 +1,5 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
+<h1>{{error.status}}</h1>
+<h2>{{message}}</h2>
+{{#if error.stack}}
 <pre>{{error.stack}}</pre>
+{{/if}}

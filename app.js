@@ -9,10 +9,6 @@ var session = require('express-session');
 var passport = require('passport');
 var mongoose = require('mongoose');
 
-var staticRoutes = require('./routes/index');
-var applicationRoutes = require('./routes/applications');
-var userRoutes = require('./routes/users');
-
 mongoose.connect('mongodb://localhost/pizza');
 
 var app = express();
@@ -62,7 +58,14 @@ app.use(function(req, res, next){
 var initPassport = require('./config/passport');
 initPassport(passport);
 
+// ROLES
+var roles = require('./lib/roles');
+app.use(roles.middleware());
+
 // APPLICATION ROUTES
+var staticRoutes = require('./routes/index');
+var applicationRoutes = require('./routes/applications');
+var userRoutes = require('./routes/users');
 app.use('/', staticRoutes);
 app.use('/applications', applicationRoutes);
 app.use('/users', userRoutes);

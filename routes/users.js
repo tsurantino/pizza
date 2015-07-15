@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
+    roles = require('../lib/roles'),
     User = require('../models/user'),
     UserController = require('../controllers/users');
 
@@ -20,7 +21,7 @@ router.route('/create')
   }));
 
 router.route('/edit/:id')
-  .get(function(req, res, next) {
+  .get(roles.is('admin'), function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
       if (err) console.log(err);
       res.render('users/edit', {
@@ -34,7 +35,7 @@ router.route('/edit/:id')
       });
     })
   })
-  .post(function(req, res) {
+  .post(roles.is('admin'), function(req, res) {
     if (req.body.role) {
       req.body.role = req.body.role.toLowerCase();
     }
@@ -63,7 +64,7 @@ router.route('/edit/:id')
   });
 
 router.route('/delete/:id')
-  .post(function(req, res) {
+  .post(roles.is('admin'), function(req, res) {
     User.findByIdAndRemove(req.params.id, function(err) {
       if (err) {
         console.log(err);
