@@ -2,6 +2,31 @@ var multer = require('multer'),
     Application = require('../models/application');
 
 module.exports = {
+  list: function(req, res) {
+    Application.find({}).exec(function (err, apps) {
+      if (err) console.log(err);
+      res.render('applications/list', {
+        apps: apps,
+      });
+    })
+  },
+
+  // TODO: this is really a judges page
+  single: function(req, res, next) {
+    Application.findById(req.params.id).populate('owner').exec(function(err, app) {
+      if (err) console.log(err);
+      res.render('applications/show', {
+        app: app,
+      });
+    })
+  },
+
+  new: function(req, res, next) {
+    res.render('applications/create', {
+      app: new Application(),
+    });
+  },
+
   create: function(req, res) {
     if (req.body.fileType == 'INVALID') {
       req.flash('messages', {
@@ -50,6 +75,15 @@ module.exports = {
         }
       });
     }
+  },
+
+  edit: function(req, res, next) {
+    Application.findById(req.params.id, function(err, app) {
+      if (err) console.log(err);
+      res.render('applications/edit', {
+        app: app,
+      });
+    })
   },
 
   update: function(req, res) {

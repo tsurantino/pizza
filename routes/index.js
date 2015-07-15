@@ -1,7 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    ApplicationController = require('../controllers/applications.js');
-    Application = require('../models/application.js');
+    ApplicationController = require('../controllers/applications.js'),
+    Application = require('../models/application.js'),
     User = require('../models/user.js');
 
 router.get('/', function(req, res, next) {
@@ -9,11 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.route('/apply')
-  .get(function(req, res, next) {
-    res.render('applications/create', {
-      app: new Application(),
-    });
-  })
+  .get(ApplicationController.new)
   .post([
     ApplicationController.checkAndSaveFile,
     ApplicationController.create,
