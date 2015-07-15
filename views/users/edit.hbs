@@ -16,9 +16,9 @@
       <div class="form-group">
         <label for="role">Role:</label>
         <select class="form-control" id="role" name="role">
-          <option {{#if role.judge}}selected="selected"{{/if}}>Judge</option>
-          <option {{#if role.hacker}}selected="selected"{{/if}}>Hacker</option>
-          <option {{#if role.admin}}selected="selected"{{/if}}>Admin</option>
+          {{#defaultSelect user.role}}
+            {{#dynamicSelect roles}}{{/dynamicSelect}}
+          {{/defaultSelect}}
         </select>
       </div>
       <hr>

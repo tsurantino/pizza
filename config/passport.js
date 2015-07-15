@@ -83,7 +83,7 @@ module.exports = function(passport) {
               password = faker.internet.password();
             
             newUser.password = password;
-            newUser.role = req.body['role'].toLowerCase();
+            newUser.role = req.body['role'];
             
             newUser.save(function(err) {
               if (err) {

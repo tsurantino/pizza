@@ -8,8 +8,8 @@ var express = require('express'),
 router.get('/', UserController.list);
 
 router.route('/edit/:id')
-  .get(roles.is('admin'), UserController.edit)
-  .post(roles.is('admin'), UserController.update);
+  .get(UserController.edit)
+  .post(UserController.update);
 
 router.route('/delete/:id')
   .post(roles.is('admin'), UserController.delete);

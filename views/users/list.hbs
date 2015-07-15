@@ -8,9 +8,7 @@
     even though we auto generate the password if created within this UI -->
     <input type="hidden" class="form-control" id="password" name="password" value="hidden">
     <select class="form-control" id="role" name="role">
-      <option>Judge</option>
-      <option>Hacker</option>
-      <option>Admin</option>
+      {{#dynamicSelect roles}}{{/dynamicSelect}}
     </select>
     <button type="submit" class="btn btn-default">Create Account</button>
   </form>

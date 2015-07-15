@@ -21,7 +21,7 @@ module.exports = function() {
     return val;
   });
 
-  hbs.registerHelper('select', function(value, options) {
+  hbs.registerHelper('defaultSelect', function(value, options) {
     return options.fn(this)
       .split('\n')
       .map(function(v) {
@@ -29,6 +29,12 @@ module.exports = function() {
         return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
       })
       .join('\n');
+  });
+
+  hbs.registerHelper('dynamicSelect', function(data) {
+    return data.map(function(item) {
+      return '<option value="' + item + '">' + item + '</option>';
+    }).join("\n");
   });
 
   hbs.registerPartials(path.join(__dirname, '../', '/views/partials'));

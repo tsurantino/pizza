@@ -1,5 +1,6 @@
 var crypto = require('crypto'),
-    emailer = require('../config/email'),  
+    emailer = require('../config/email'),
+    roles = require('../lib/roles');  
     User = require('../models/user');
 
 module.exports = {
@@ -7,6 +8,7 @@ module.exports = {
     User.find({}, function(err, users) {
       res.render('users/list', {
         users: users,
+        roles: roles.roles,
       });
     })
   },
@@ -16,12 +18,7 @@ module.exports = {
       if (err) console.log(err);
       res.render('users/edit', {
         user: user,
-        role: {
-          // TODO: HACK :(
-          judge: user.role == 'judge' ? true : false,
-          hacker: user.role == 'hacker' ? true : false,
-          admin: user.role == 'admin' ? true : false,
-        }
+        roles: roles.roles,
       });
     })
   },
