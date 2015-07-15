@@ -1,6 +1,6 @@
 var crypto = require('crypto'),
     emailer = require('../config/email'),
-    roles = require('../lib/roles');  
+    roles = require('../config/roles');  
     User = require('../models/user');
 
 module.exports = {
