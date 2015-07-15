@@ -23,25 +23,25 @@
       <div class="form-group">
         <label>Level of Study</label>
         <select name="levelOfStudy" class="form-control selectpicker" required>
-          {{#select app.levelOfStudy}}
+          {{#defaultSelect app.levelOfStudy}}
           <option value="Undergraduate">Undergraduate</option>
           <option value="Graduate">Graduate</option>
           <option value="High School">High School</option>
           <option value="Other">Other</option>
-          {{/select}}
+          {{/defaultSelect}}
         </select>
         <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
         <label>Graduation Year</label>
         <select name="gradYear" class="form-control" class="selectpicker" required>
-          {{#select app.gradYear}}
+          {{#defaultSelect app.gradYear}}
           <option value="2016">2016</option>
           <option value="2017">2017</option>
           <option value="2018">2018</option>
           <option value="2019">2019</option>
           <option value="2020">2020</option>
-          {{/select}}
+          {{/defaultSelect}}
         </select>
         <div class="help-block with-errors"></div>
       </div>
@@ -82,7 +82,7 @@
       <div class="form-group">
         <label>T-Shirt</label>
         <select name="shirt" class="form-control" class="selectpicker" required>
-          {{#select app.shirt}}
+          {{#defaultSelect app.shirt}}
           <option value="Men's - S">Men's - S</option>
           <option value="Men's - M">Men's - M</option>
           <option value="Men's - L">Men's - L</option>
@@ -91,7 +91,7 @@
           <option value="Women's - M">Women's - M</option>
           <option value="Women's - L">Women's - L</option>
           <option value="Women's - XL">Women's - XL</option>
-          {{/select}}
+          {{/defaultSelect}}
         </select>
         <div class="help-block with-errors"></div>
       </div>
