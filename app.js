@@ -59,7 +59,7 @@ var initPassport = require('./config/passport');
 initPassport(passport);
 
 // ROLES
-var roles = require('./lib/roles');
+var roles = require('./config/roles');
 app.use(roles.middleware());
 
 // APPLICATION ROUTES
