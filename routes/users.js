@@ -1,6 +1,6 @@
 var express = require('express'),
     router = express.Router(),
-    roles = require('../lib/roles'),
+    roles = require('../config/roles'),
     passport = require('passport'),
     User = require('../models/user'),
     UserController = require('../controllers/users');
